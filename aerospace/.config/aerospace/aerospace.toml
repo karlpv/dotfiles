@@ -1,0 +1,107 @@
+config-version = 2
+
+# Start AeroSpace at login (disable if you prefer manual start while testing)
+start-at-login = true
+
+# i3-like: workspaces are created/destroyed on demand
+persistent-workspaces = []
+
+# i3-like: disable normalization
+enable-normalization-flatten-containers = false
+enable-normalization-opposite-orientation-for-nested-containers = false
+
+# i3-like: mouse follows focused monitor
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed = ['move-mouse window-lazy-center']
+
+
+[mode.main.binding]
+ctrl-alt-cmd-h = 'focus --boundaries-action wrap-around-the-workspace left'
+ctrl-alt-cmd-j = 'focus --boundaries-action wrap-around-the-workspace down'
+ctrl-alt-cmd-k = 'focus --boundaries-action wrap-around-the-workspace up'
+ctrl-alt-cmd-l = 'focus --boundaries-action wrap-around-the-workspace right'
+
+ctrl-alt-cmd-left = 'focus --boundaries-action wrap-around-the-workspace left'
+ctrl-alt-cmd-down = 'focus --boundaries-action wrap-around-the-workspace down'
+ctrl-alt-cmd-up = 'focus --boundaries-action wrap-around-the-workspace up'
+ctrl-alt-cmd-right = 'focus --boundaries-action wrap-around-the-workspace right'
+
+ctrl-alt-cmd-shift-h = 'move left'
+ctrl-alt-cmd-shift-j = 'move down'
+ctrl-alt-cmd-shift-k = 'move up'
+ctrl-alt-cmd-shift-l = 'move right'
+
+ctrl-alt-cmd-shift-left = 'move left'
+ctrl-alt-cmd-shift-down = 'move down'
+ctrl-alt-cmd-shift-up = 'move up'
+ctrl-alt-cmd-shift-right = 'move right'
+
+# Layout (match i3)
+ctrl-alt-cmd-shift-v = 'split vertical'
+ctrl-alt-cmd-shift-s = 'split horizontal'
+ctrl-alt-cmd-shift-f = 'fullscreen'
+
+ctrl-alt-cmd-t = 'layout v_accordion'
+ctrl-alt-cmd-f = 'layout h_accordion'
+ctrl-alt-cmd-e = 'layout tiles horizontal vertical'
+
+# Floating toggle
+ctrl-alt-cmd-w = 'layout floating tiling'
+
+# Kill focused window (i3 kill)
+ctrl-alt-cmd-q = 'close'
+
+ctrl-alt-cmd-1 = 'workspace --auto-back-and-forth 1'
+ctrl-alt-cmd-2 = 'workspace --auto-back-and-forth 2'
+ctrl-alt-cmd-3 = 'workspace --auto-back-and-forth 3'
+ctrl-alt-cmd-4 = 'workspace --auto-back-and-forth 4'
+ctrl-alt-cmd-5 = 'workspace --auto-back-and-forth 5'
+ctrl-alt-cmd-6 = 'workspace --auto-back-and-forth 6'
+ctrl-alt-cmd-7 = 'workspace --auto-back-and-forth 7'
+ctrl-alt-cmd-8 = 'workspace --auto-back-and-forth 8'
+ctrl-alt-cmd-9 = 'workspace --auto-back-and-forth 9'
+ctrl-alt-cmd-0 = 'workspace --auto-back-and-forth 10'
+
+# i3: $mod+Prior/$mod+Next to cycle workspaces in numeric order
+ctrl-alt-cmd-pageUp = 'exec-and-forget printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" | aerospace workspace --stdin --wrap-around prev'
+ctrl-alt-cmd-pageDown = 'exec-and-forget printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" | aerospace workspace --stdin --wrap-around next'
+
+# A: send window to workspace, stay on current workspace
+ctrl-alt-cmd-shift-1 = 'move-node-to-workspace 1'
+ctrl-alt-cmd-shift-2 = 'move-node-to-workspace 2'
+ctrl-alt-cmd-shift-3 = 'move-node-to-workspace 3'
+ctrl-alt-cmd-shift-4 = 'move-node-to-workspace 4'
+ctrl-alt-cmd-shift-5 = 'move-node-to-workspace 5'
+ctrl-alt-cmd-shift-6 = 'move-node-to-workspace 6'
+ctrl-alt-cmd-shift-7 = 'move-node-to-workspace 7'
+ctrl-alt-cmd-shift-8 = 'move-node-to-workspace 8'
+ctrl-alt-cmd-shift-9 = 'move-node-to-workspace 9'
+ctrl-alt-cmd-shift-0 = 'move-node-to-workspace 10'
+
+ctrl-alt-cmd-tab = 'workspace-back-and-forth'
+ctrl-alt-cmd-shift-c = 'reload-config'
+ctrl-alt-cmd-r = 'mode resize'
+
+[mode.resize.binding]
+ctrl-alt-cmd-r = 'mode main'
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+left = 'resize width -50'
+down = 'resize height +50'
+up = 'resize height -50'
+right = 'resize width +50'
+
+enter = 'mode main'
+minus = 'resize smart -50'
+equal = 'resize smart +50'
+esc = 'mode main'
+
+
+
+[[on-window-detected]]
+if.app-id="com.mitchellh.ghostty"
+run= [
+  "layout tiling",
+]
