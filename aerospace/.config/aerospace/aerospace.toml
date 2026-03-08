@@ -81,6 +81,8 @@ ctrl-alt-cmd-shift-0 = 'move-node-to-workspace 10'
 ctrl-alt-cmd-tab = 'workspace-back-and-forth'
 ctrl-alt-cmd-shift-c = 'reload-config'
 ctrl-alt-cmd-r = 'mode resize'
+cmd-h = [] # Disable "hide application"
+cmd-alt-h = [] # Disable "hide others"
 
 [mode.resize.binding]
 ctrl-alt-cmd-r = 'mode main'
@@ -102,6 +104,12 @@ esc = 'mode main'
 
 [[on-window-detected]]
 if.app-id="com.mitchellh.ghostty"
+run= [
+  "layout tiling",
+]
+
+[[on-window-detected]]
+if.app-id="info.sioyek.sioyek"
 run= [
   "layout tiling",
 ]

@@ -152,9 +152,6 @@ zathura_app() { open -a "Zathura" "$@"; }
 alias jc="javac -cp \"$HOME/school/SPRING2026/TOL203 - DSA/algs4.jar:.\""
 alias jr="java -cp \"$HOME/school/SPRING2026/TOL203 - DSA/algs4.jar:.\""
 
-# Make tmux always use your .config tmux.conf
-alias tmux='tmux -f "$TMUX_CONF"'
-
 # Files
 alias ls='ls -G -a'
 alias ll='ls -la'
