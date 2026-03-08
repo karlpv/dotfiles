@@ -84,23 +84,34 @@ ctrl-alt-cmd-r = 'mode resize'
 cmd-h = [] # Disable "hide application"
 cmd-alt-h = [] # Disable "hide others"
 
+# [mode.resize.binding]
+# ctrl-alt-cmd-r = 'mode main'
+# h = 'resize width -50'
+# j = 'resize height +50'
+# k = 'resize height -50'
+# l = 'resize width +50'
+# left = 'resize width -50'
+# down = 'resize height +50'
+# up = 'resize height -50'
+# right = 'resize width +50'
+#
+# enter = 'mode main'
+# minus = 'resize smart -50'
+# equal = 'resize smart +50'
+# esc = 'mode main'
+
 [mode.resize.binding]
 ctrl-alt-cmd-r = 'mode main'
-h = 'resize width -50'
-j = 'resize height +50'
-k = 'resize height -50'
-l = 'resize width +50'
-left = 'resize width -50'
-down = 'resize height +50'
-up = 'resize height -50'
-right = 'resize width +50'
+h = 'resize smart -50'
+l = 'resize smart +50'
 
-enter = 'mode main'
+left = 'resize smart -50'
+right = 'resize smart +50'
+
 minus = 'resize smart -50'
 equal = 'resize smart +50'
+enter = 'mode main'
 esc = 'mode main'
-
-
 
 [[on-window-detected]]
 if.app-id="com.mitchellh.ghostty"
@@ -109,7 +120,19 @@ run= [
 ]
 
 [[on-window-detected]]
+if.app-id="com.apple.FaceTime"
+run= [
+  "layout tiling",
+]
+
+[[on-window-detected]]
 if.app-id="info.sioyek.sioyek"
+run= [
+  "layout tiling",
+]
+
+[[on-window-detected]]
+if.app-id="com.macpaw.CleanMyMac4"
 run= [
   "layout tiling",
 ]
