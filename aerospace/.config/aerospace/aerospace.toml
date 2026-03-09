@@ -113,16 +113,11 @@ equal = 'resize smart +50'
 enter = 'mode main'
 esc = 'mode main'
 
-[[on-window-detected]]
-if.app-id="com.mitchellh.ghostty"
-run= [
-  "layout tiling",
-]
 
 [[on-window-detected]]
 if.app-id="com.apple.FaceTime"
 run= [
-  "layout tiling",
+  "layout floating",
 ]
 
 [[on-window-detected]]
@@ -134,5 +129,29 @@ run= [
 [[on-window-detected]]
 if.app-id="com.macpaw.CleanMyMac4"
 run= [
-  "layout tiling",
+  "layout floating",
+]
+
+[[on-window-detected]]
+if.app-id="com.macpaw.CleanMyMac5.Menu"
+run= [
+  "layout floating",
+]
+
+[[on-window-detected]]
+if.app-id="com.apple.MobileSMS"
+run= [
+  "layout floating",
+]
+
+[[on-window-detected]]
+if.app-id="com.apple.systempreferences"
+run= [
+  "layout floating",
+]
+
+[[on-window-detected]]
+if.app-id="com.apple.Books"
+run= [
+  "layout floating",
 ]
