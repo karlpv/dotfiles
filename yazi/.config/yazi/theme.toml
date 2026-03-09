@@ -1,0 +1,11 @@
+[flavor]
+light = "vscode-light-modern"
+dark = "vscode-dark-modern"
+
+# [ui]
+# background = "#1e1e2e"
+# foreground = "#cdd6f4"
+
+[status]
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }

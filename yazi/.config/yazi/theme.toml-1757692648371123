@@ -1,0 +1,75 @@
+# [flavor]
+# light = "kanagawa-lotus"
+# dark = "kanagawa"
+
+# [ui]
+# background = "#1e1e2e"
+# foreground = "#cdd6f4"
+#cursor = "#f5c2e7"
+
+# [status]
+# info = "#89b4fa"
+# warn = "#f9e2af"
+# error = "#f38ba8"
+
+[ui]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+cursor = "#f5c2e7"
+title = "#cdd6f4"
+border = "#45475a"
+selection = "#313244"
+selection_fg = "#cdd6f4"
+
+[status]
+normal = "#a6adc8"
+progress = "#89b4fa"
+separator = "#585b70"
+mode_normal = "#cdd6f4"
+mode_select = "#f9e2af"
+mode_unset = "#fab387"
+info = "#89b4fa"
+warn = "#f9e2af"
+error = "#f38ba8"
+
+[which]
+mask = "#11111b"
+cand = "#cdd6f4"
+desc = "#a6adc8"
+separator = "#585b70"
+
+[help]
+on = "#a6e3a1"
+off = "#f38ba8"
+key = "#cba6f7"
+desc = "#a6adc8"
+
+[input]
+value = "#cdd6f4"
+border = "#585b70"
+title = "#cdd6f4"
+
+[completion]
+active = "#89b4fa"
+inactive = "#a6adc8"
+
+[manager]
+cwd = "#89b4fa"
+hovered = "#cdd6f4"
+preview = "#a6adc8"
+preview_title = "#cdd6f4"
+
+[marker]
+selected = "#b4befe"
+cut = "#fab387"
+copied = "#a6e3a1"
+
+[filetype]
+dir = "#89b4fa"
+link = "#94e2d5"
+exec = "#a6e3a1"
+img = "#f9e2af"
+video = "#fab387"
+music = "#94e2d5"
+doc = "#cba6f7"
+archive = "#f38ba8"

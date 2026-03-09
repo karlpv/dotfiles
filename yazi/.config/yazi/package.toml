@@ -1,0 +1,47 @@
+[plugin]
+deps = []
+
+[[flavor.deps]]
+use = "956MB/vscode-dark-modern"
+rev = "cd60541"
+hash = "f970182bee3543831796629ccf078553"
+
+[[flavor.deps]]
+use = "956MB/vscode-light-modern"
+rev = "c054b12"
+hash = "87265fb9bc07de76c0c9c916c84cc8b5"
+
+[[flavor.deps]]
+use = "gosxrgxx/flexoki-dark"
+rev = "28e1977"
+hash = "9dbbb64ea20f9f1271c31951dea55c7b"
+
+[[flavor.deps]]
+use = "gosxrgxx/flexoki-light"
+rev = "45eb0a0"
+hash = "1ee212b0799497b54c7e60bac8931e4e"
+
+[[flavor.deps]]
+use = "956MB/vscode-dark-plus"
+rev = "113cc48"
+hash = "fb2175ea2b78bff55fa83d0661d77407"
+
+[[flavor.deps]]
+use = "956MB/vscode-light-plus"
+rev = "83c8be6"
+hash = "3b7e1e867311745f1335449b9a9cdfd3"
+
+[[flavor.deps]]
+use = "PinThePenguinOne/sunset"
+rev = "64ad82e"
+hash = "ae36775ed414cad1bcd7af692422df0f"
+
+[[flavor.deps]]
+use = "dangooddd/kanagawa"
+rev = "a0b1d9d"
+hash = "abfb0b2371259b2c8adfc7b617c3d7e5"
+
+[[flavor.deps]]
+use = "muratoffalex/kanagawa-lotus"
+rev = "4275a1a"
+hash = "e3c47ba547279aff64b6e46eefcf4479"

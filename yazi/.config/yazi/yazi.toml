@@ -1,0 +1,22 @@
+[opener]
+sioyek_reuse = [
+  { run = "sioyek --reuse-window %s", orphan = true, desc = "Sioyek (reuse window)", for = "macos" },
+]
+
+sioyek_new_window = [
+  { run = "sioyek --new-window %s", orphan = true, desc = "Sioyek (new window)", for = "macos" },
+]
+
+zathura = [
+  { run = "/opt/homebrew/bin/zathura %s", orphan = true, desc = "Zathura", for = "macos" },
+]
+
+mac_preview = [
+  { run = "open -a Preview %s", orphan = true, desc = "Preview (macOS)", for = "macos" },
+]
+
+[open]
+prepend_rules = [
+  { mime = "application/pdf", use = ["sioyek_reuse", "sioyek_new_window", "zathura", "mac_preview"] },
+  { url = "*.pdf", use = ["sioyek_reuse", "sioyek_new_window", "zathura", "mac_preview"] },
+]

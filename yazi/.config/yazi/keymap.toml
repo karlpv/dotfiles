@@ -1,0 +1,16 @@
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+[mgr]
+prepend_keymap = [
+# Goto
+    { on = ["g", "h"],       run = "cd ~",                    desc = "Go 🏠home" },
+    { on = ["g", "c"],       run = "cd ~/.config",            desc = "Go ⚙︎~/.config" },
+    { on = ["g", "d"],       run = "cd ~/Downloads",          desc = "Go ⬇️~/Downloads" },
+    { on = ["g", "s"],       run = "cd ~/school/SPRING2026",  desc = "Go 🎓school" },
+    { on = ["g", "<Space>"], run = "cd --interactive",        desc = "Jump interactively" },
+    { on = ["g", "f"],       run = "follow",                  desc = "Follow hovered symlink" },
+
+# Back
+    { on = [",", ","], run = "back", desc = "Go back to previous directory" },
+    { on = "þ", run = "find --smart",            desc = "Find next file" },
+]
