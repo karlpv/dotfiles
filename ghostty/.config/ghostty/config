@@ -7,7 +7,7 @@ quit-after-last-window-closed = true
 auto-update = download
 
 # ---------- Appearance ----------
-theme = dark:Builtin Pastel Dark,light:primary
+theme = dark:karl-dark,light:primary
 window-theme = system
 window-colorspace = display-p3
 
