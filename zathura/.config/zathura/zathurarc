@@ -1,0 +1,72 @@
+# ~/.config/zathura/zathurarc
+
+# Colors and look
+# set recolor "true"
+# set recolor-darkcolor "#f5f5f5"
+# set recolor-lightcolor "#1e1e1e"
+
+# Zoom and window
+set adjust-open "best-fit"
+set statusbar-h-padding 6
+set statusbar-v-padding 2
+
+
+# Navigation
+map [normal] j scroll smooth-down
+map [normal] k scroll smooth-up
+map [normal] h scroll left
+map [normal] l scroll right
+map [normal] <C-d> scroll half-down
+map [normal] <C-u> scroll half-up
+
+map [fullscreen] j scroll smooth-down
+map [fullscreen] k scroll smooth-up
+map [fullscreen] h scroll left
+map [fullscreen] l scroll right
+map [fullscreen] <C-d> scroll half-down
+map [fullscreen] <C-u> scroll half-up
+
+map [presentation] j scroll smooth-down
+map [presentation] k scroll smooth-up
+map [presentation] h scroll left
+map [presentation] l scroll right
+map [presentation] <C-d> scroll half-down
+map [presentation] <C-u> scroll half-up
+
+# Arrow navigation
+map [normal] <Down> scroll smooth-down
+map [normal] <Up> scroll smooth-up
+map [normal] <Left> scroll left
+map [normal] <Right> scroll right
+
+map [normal] n navigate next
+map [normal] m navigate previous
+
+# Behavior
+set selection-clipboard clipboard
+set zoom-step 5
+set scroll-step 1
+set scroll-hstep 1
+
+# File reloading (auto-refresh)
+set synctex true
+set synctex-editor-command "nvim --headless +%{line} %{input}"
+
+# Font
+set font "Iosevka 15"
+
+# Mappings
+# unmap f
+# map f toggle_fullscreen
+# map [fullscreen] f toggle_fullscreen
+unmap o
+# map <A-c> copy
+
+# map þ search
+# map Þ ?
+
+map [normal] <Tab> toggle_index
+# Make þ open the forward-search prompt (like `/`)
+map þ feedkeys /
+# (Optional) Make Þ open the backward-search prompt (like `?`)
+map Þ feedkeys ?
