@@ -34,6 +34,9 @@ opt.tabstop = 2
 opt.shiftwidth = 2
 opt.softtabstop = 2
 
+-- disable swapfiles to avoid SwapExists confirmation prompts
+opt.swapfile = false
+
 -- search: incremental + highlighted matches, with smart casing
 opt.incsearch = true
 opt.hlsearch = true
