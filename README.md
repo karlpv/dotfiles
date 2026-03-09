@@ -1,4 +1,4 @@
-My Personal Dotfiles. 
+My Personal Dotfiles using GNU Stow
 
 zshrc tailored to macOS with dark/light toggle, because I like light mode sometimes :D
 
