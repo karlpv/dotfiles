@@ -3,9 +3,11 @@
 # ================================
 export XDG_CONFIG_HOME="$HOME/.config"
 export TMUX_CONF="$HOME/.config/tmux/tmux.conf"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
 # Make sure $PATH is sane early
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+typeset -U path PATH
+path=(/opt/homebrew/bin /opt/homebrew/sbin $path)
 export LANG="en_US.UTF-8"
 export EDITOR="nvim"
 export CLASSPATH=".:$HOME/school/SPRING2026/TOL203 - DSA/algs4.jar"
@@ -34,26 +36,55 @@ _apply_theme_minimal() {
 _apply_prompt_minimal() {
   setopt prompt_subst
   if [[ "$THEME" == "light" ]]; then
-    PROMPT='%F{240}%n@%m%f %F{33}%2~%f${vcs_info_msg_0_} %F{34}%#%f '
-    RPROMPT='%(?..%F{160}exit:%?%f )%F{243}%*%f'
+    PROMPT='%F{244}%n@%m%f %F{#c84053}%2~%f${vcs_info_msg_0_} %F{#4fa6b0}%#%f '
+    RPROMPT='${ZSH_MODE_INDICATOR}%(?..%F{#c84053}exit:%?%f )%F{245}%*%f'
   else
-    PROMPT='%F{#8a8a8a}%n@%m%f %F{#00afff}%2~%f${vcs_info_msg_0_} %F{#00afff}%#%f '
-    RPROMPT='%(?..%F{#d70000}exit:%?%f )%F{#8a8a8a}%*%f'
+    PROMPT='%F{#f6f6ee}%n@%m%f %F{#97e023}%2~%f${vcs_info_msg_0_} %F{#57d1aa}%#%f '
+    RPROMPT='${ZSH_MODE_INDICATOR}%(?..%F{#f3005f}exit:%?%f )%F{#615e4b}%*%f'
   fi
+}
+
+_update_zle_mode_indicator() {
+  case ${KEYMAP:-viins} in
+    vicmd)
+      ZSH_MODE_INDICATOR='%F{#f3005f}[N]%f '
+      printf '\e[1 q'
+      ;;
+    visual)
+      ZSH_MODE_INDICATOR='%F{#9c64fe}[V]%f '
+      printf '\e[1 q'
+      ;;
+    *)
+      ZSH_MODE_INDICATOR='%F{#97e023}[I]%f '
+      printf '\e[5 q'
+      ;;
+  esac
 }
 
 autoload -Uz add-zsh-hook vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' use-prompt-escapes true
-zstyle ':vcs_info:git:*' formats ' %F{#ffff00}(%b)%f'
-zstyle ':vcs_info:git:*' actionformats ' %F{#ffaf00}(%b|%a)%f'
+zstyle ':vcs_info:git:*' formats ' %F{#f3005f}(%b)%f'
+zstyle ':vcs_info:git:*' actionformats ' %F{#fa8419}(%b|%a)%f'
 zstyle ':vcs_info:git:*' check-for-changes false
 zstyle ':vcs_info:*' max-exports 2
 
 _prompt_precmd() {
   vcs_info
+  _update_zle_mode_indicator
 }
 add-zsh-hook precmd _prompt_precmd
+
+zle-keymap-select() {
+  _update_zle_mode_indicator
+  zle reset-prompt
+}
+zle-line-init() {
+  _update_zle_mode_indicator
+  zle reset-prompt
+}
+zle -N zle-keymap-select
+zle -N zle-line-init
 
 # Initialize theme for this shell
 _detect_theme
@@ -87,10 +118,10 @@ zinit light-mode for \
   zdharma-continuum/zinit-annex-rust
 
 # Core plugins
-zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
+zinit light zsh-users/zsh-syntax-highlighting
 
 # ================================
 #  COMPLETION CONFIG
@@ -101,15 +132,18 @@ zstyle ':fzf-tab:complete:__zoxide_z:*'   fzf-preview 'ls -G $realpath'
 zstyle ':fzf-tab:complete:z:*'            fzf-preview 'ls -G $realpath'
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+(( ${+LS_COLORS} )) && zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 
-autoload -U compinit && compinit -C
+[[ -d "$XDG_CACHE_HOME/zsh" ]] || command mkdir -p "$XDG_CACHE_HOME/zsh"
+autoload -U compinit && compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-${ZSH_VERSION}" -C
 
 # Keybindings for completion
-bindkey '^I' complete-word
-bindkey '^[[Z' reverse-menu-complete
+if [[ -o interactive && -t 0 && -t 1 ]]; then
+  bindkey '^I' complete-word
+  bindkey '^[[Z' reverse-menu-complete
+fi
 
 # ================================
 #  HISTORY
@@ -129,7 +163,9 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --ignore-file ~/.fzfignore --exclude node_modules --exclude .git --exclude .cache'
 export FZF_DEFAULT_OPTS='--height 30% --layout=reverse --border --info=inline --preview-window=right:60% --preview "bat --style=numbers --color=always --line-range :100 {}"'
 export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :100 {}'"
-command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
+if [[ -o interactive && -t 0 && -t 1 ]] && command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --zsh)"
+fi
 
 # ================================
 #  ZOXIDE
@@ -256,7 +292,7 @@ y() {
 
   # If a file was chosen
   if [[ -s "$tmp_choice" ]]; then
-    choice="$(head -n 1 "$tmp_choice")"
+    IFS= read -r choice < "$tmp_choice"
     if [[ -n "$choice" ]]; then
       builtin cd -- "${choice:h}"
       rm -f -- "$tmp_cwd" "$tmp_choice"
@@ -282,7 +318,7 @@ y() {
 
   # Otherwise (q/cancel), cd to last dir Yazi wrote
   if [[ -s "$tmp_cwd" ]]; then
-    cwd="$(cat "$tmp_cwd")"
+    IFS= read -r cwd < "$tmp_cwd"
     [[ -n "$cwd" && "$cwd" != "$PWD" ]] && builtin cd -- "$cwd"
   fi
 
@@ -290,27 +326,29 @@ y() {
 }
 
 # --- Fuzzy File Finder Widgets ---
-fzf-file-widget() {
-  local file
-  file="$(fd --type f --hidden --follow --exclude .git --exclude node_modules . \
-    | fzf --height 40% --reverse --border --ansi \
-           --preview 'bat --style=numbers --color=always --line-range :100 {} 2>/dev/null')" || return
-  LBUFFER+="${(q)file}"
-  zle reset-prompt
-}
-zle -N fzf-file-widget
-bindkey '^F' fzf-file-widget
+if [[ -o interactive && -t 0 && -t 1 ]]; then
+  fzf-file-widget() {
+    local file
+    file="$(fd --type f --hidden --follow --exclude .git --exclude node_modules . \
+      | fzf --height 40% --reverse --border --ansi \
+             --preview 'bat --style=numbers --color=always --line-range :100 {} 2>/dev/null')" || return
+    LBUFFER+="${(q)file}"
+    zle reset-prompt
+  }
+  zle -N fzf-file-widget
+  bindkey '^F' fzf-file-widget
 
-fzf-open-widget() {
-  local file
-  file="$(fd --type f --hidden --follow --exclude .git --exclude node_modules . \
-    | fzf --height 40% --reverse --border --ansi \
-           --preview 'bat --style=numbers --color=always --line-range :100 {} 2>/dev/null')" || return
-  "${EDITOR:-nvim}" "$file"
-  zle reset-prompt
-}
-zle -N fzf-open-widget
-bindkey '^O' fzf-open-widget
+  fzf-open-widget() {
+    local file
+    file="$(fd --type f --hidden --follow --exclude .git --exclude node_modules . \
+      | fzf --height 40% --reverse --border --ansi \
+             --preview 'bat --style=numbers --color=always --line-range :100 {} 2>/dev/null')" || return
+    "${EDITOR:-nvim}" "$file"
+    zle reset-prompt
+  }
+  zle -N fzf-open-widget
+  bindkey '^O' fzf-open-widget
+fi
 
 # ================================
 #  External env/hooks
@@ -318,7 +356,7 @@ bindkey '^O' fzf-open-widget
 # opam (quiet)
 [[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" >/dev/null 2>&1
 # Java (for Morpho)
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+path=(/opt/homebrew/opt/openjdk/bin $path)
 
 # ================================
 #  FINAL: Auto-attach tmux (and pass THEME in)
@@ -331,5 +369,6 @@ fi
 
 
 
-[ -f "/Users/kallip/.ghcup/env" ] && . "/Users/kallip/.ghcup/env" # ghcup-env
-export PATH="/Applications/IntelliJ IDEA.app/Contents/MacOS:$PATH"
+# [ -f "/Users/kallip/.ghcup/env" ] && . "/Users/kallip/.ghcup/env" # ghcup-env
+
+path=("/Applications/IntelliJ IDEA.app/Contents/MacOS" $path)

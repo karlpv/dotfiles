@@ -34,10 +34,10 @@ map [presentation] <C-d> scroll half-down
 map [presentation] <C-u> scroll half-up
 
 # Arrow navigation
-map [normal] <Down> scroll smooth-down
-map [normal] <Up> scroll smooth-up
-map [normal] <Left> scroll left
-map [normal] <Right> scroll right
+# map [normal] <Down> scroll smooth-down
+# map [normal] <Up> scroll smooth-up
+# map [normal] <Left> scroll left
+# map [normal] <Right> scroll right
 
 map [normal] n navigate next
 map [normal] m navigate previous
@@ -59,7 +59,7 @@ set font "Iosevka 15"
 # unmap f
 # map f toggle_fullscreen
 # map [fullscreen] f toggle_fullscreen
-unmap o
+# unmap o
 # map <A-c> copy
 
 # map þ search

@@ -7,7 +7,8 @@ quit-after-last-window-closed = true
 auto-update = download
 
 # ---------- Appearance ----------
-theme = dark:karl-dark,light:primary
+theme = karl-dark
+# light:primary
 window-theme = system
 window-colorspace = display-p3
 
@@ -16,7 +17,8 @@ font-family = Jetbrains Mono
 font-size = 22
 
 # ---------- Cursor & Mouse ----------
-cursor-style = block_hollow
+cursor-style = block
+cursor-style-blink = true
 cursor-click-to-move = true
 mouse-hide-while-typing = false
 
@@ -66,4 +68,4 @@ keybind = cmd+zero=reset_font_size
 # Uncomment after upgrading to a build where `ghostty +list-actions` includes it.
 # keybind = cmd+shift+o=toggle_background_opacity
 
-background-opacity = 0.95
+# background-opacity = 0.95

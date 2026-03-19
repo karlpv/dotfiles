@@ -33,6 +33,7 @@ end
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.softtabstop = 2
+opt.fillchars:append { eob = "~" }
 
 -- disable swapfiles to avoid SwapExists confirmation prompts
 opt.swapfile = false

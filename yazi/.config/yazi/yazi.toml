@@ -20,3 +20,23 @@ prepend_rules = [
   { mime = "application/pdf", use = ["sioyek_reuse", "sioyek_new_window", "zathura", "mac_preview"] },
   { url = "*.pdf", use = ["sioyek_reuse", "sioyek_new_window", "zathura", "mac_preview"] },
 ]
+
+[plugin]
+
+prepend_preloaders = [
+    # Office Documents
+    { mime = "application/openxmlformats-officedocument.*", run = "office" },
+    { mime = "application/oasis.opendocument.*", run = "office" },
+    { mime = "application/ms-*", run = "office" },
+    { mime = "application/msword", run = "office" },
+    { name = "*.docx", run = "office" },
+]
+
+prepend_previewers = [
+    # Office Documents
+    { mime = "application/openxmlformats-officedocument.*", run = "office" },
+    { mime = "application/oasis.opendocument.*", run = "office" },
+    { mime = "application/ms-*", run = "office" },
+    { mime = "application/msword", run = "office" },
+    { name = "*.docx", run = "office" },
+]

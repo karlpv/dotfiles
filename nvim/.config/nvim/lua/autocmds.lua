@@ -2,7 +2,7 @@ require "nvchad.autocmds"
 
 -- Minimal: set NvChad theme once on UI start based on macOS appearance
 -- Pick themes that exist in base46:
-local LIGHT, DARK = "vscode_light", "vim_default_hc"
+local LIGHT, DARK = "vim_default_light", "vim_default"
 
 local function mac_is_dark()
   local out = vim.fn.system [[osascript -e 'tell app "System Events" to tell appearance preferences to get dark mode']]
