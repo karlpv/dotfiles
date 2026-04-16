@@ -1,47 +1,21 @@
 # ================================
-#  XDG & Core Paths (SET FIRST)
+#  XDG & Core Env (SET FIRST)
 # ================================
 export XDG_CONFIG_HOME="$HOME/.config"
 export TMUX_CONF="$HOME/.config/tmux/tmux.conf"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
-# Make sure $PATH is sane early
-typeset -U path PATH
-path=(/opt/homebrew/bin /opt/homebrew/sbin $path)
 export LANG="en_US.UTF-8"
 export EDITOR="nvim"
 export CLASSPATH=".:$HOME/school/SPRING2026/TOL203 - DSA/algs4.jar"
 # ================================
-#  THEME (macOS) → $THEME
+#  PROMPT & DISPLAY
 # ================================
-# Detect macOS system appearance quickly & reliably
-_detect_theme() {
-  if defaults read -g AppleInterfaceStyle 2>/dev/null | grep -qi 'Dark'; then
-    THEME="dark"
-  else
-    THEME="light"
-  fi
-  export THEME
-}
-
-# Minimal shell tweaks by theme (improve autosuggest contrast)
-_apply_theme_minimal() {
-  if [[ "$THEME" == "light" ]]; then
-    export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#8a8f98'
-  else
-    export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#5f5f5f'
-  fi
-}
 
 _apply_prompt_minimal() {
   setopt prompt_subst
-  if [[ "$THEME" == "light" ]]; then
-    PROMPT='%F{244}%n@%m%f %F{#c84053}%2~%f${vcs_info_msg_0_} %F{#4fa6b0}%#%f '
-    RPROMPT='${ZSH_MODE_INDICATOR}%(?..%F{#c84053}exit:%?%f )%F{245}%*%f'
-  else
-    PROMPT='%F{#f6f6ee}%n@%m%f %F{#97e023}%2~%f${vcs_info_msg_0_} %F{#57d1aa}%#%f '
-    RPROMPT='${ZSH_MODE_INDICATOR}%(?..%F{#f3005f}exit:%?%f )%F{#615e4b}%*%f'
-  fi
+  PROMPT='${ZSH_MODE_INDICATOR}%F{244}%n@%m%f %F{#c84053}%2~%f${vcs_info_msg_0_} %F{#4fa6b0}%#%f '
+  RPROMPT='%(?..%F{#c84053}exit:%?%f )%F{245}%*%f'
 }
 
 _update_zle_mode_indicator() {
@@ -86,16 +60,7 @@ zle-line-init() {
 zle -N zle-keymap-select
 zle -N zle-line-init
 
-# Initialize theme for this shell
-_detect_theme
-_apply_theme_minimal
 _apply_prompt_minimal
-
-# Event-driven refresh (e.g., Raycast runs: pkill -USR1 -x zsh)
-TRAPUSR1() { _detect_theme; _apply_theme_minimal; _apply_prompt_minimal; return 0 }
-
-# Manual nudge
-alias theme-sync='_detect_theme; _apply_theme_minimal; _apply_prompt_minimal; echo "Theme: $THEME"'
 
 # ================================
 #  ZINIT PLUGIN MANAGER
@@ -109,13 +74,6 @@ fi
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Annexes (nice QoL)
-zinit light-mode for \
-  zdharma-continuum/zinit-annex-as-monitor \
-  zdharma-continuum/zinit-annex-bin-gem-node \
-  zdharma-continuum/zinit-annex-patch-dl \
-  zdharma-continuum/zinit-annex-rust
 
 # Core plugins
 zinit light zsh-users/zsh-completions
@@ -148,6 +106,7 @@ fi
 # ================================
 #  HISTORY
 # ================================
+KEYTIMEOUT=1
 HISTSIZE=5000
 HISTFILE="$HOME/.zsh_history"
 SAVEHIST=$HISTSIZE
@@ -248,40 +207,6 @@ extract() {
     *)         echo "'$f' cannot be extracted via extract()"; return 2 ;;
   esac
 }
-
-
-
-# Yazi: if file chosen -> cd to file dir and open it
-#       if quit/cancel   -> cd to last dir you were in
-# y() {
-#   local tmp_cwd tmp_choice cwd choice
-#
-#   tmp_cwd="$(mktemp -t yazi-cwd.XXXXXX)"
-#   tmp_choice="$(mktemp -t yazi-choice.XXXXXX)"
-#
-#   yazi --cwd-file="$tmp_cwd" --chooser-file="$tmp_choice" "$@"
-#
-#   # 1) If a file was chosen, cd to its directory and open it
-#   if [[ -s "$tmp_choice" ]]; then
-#     choice="$(head -n 1 "$tmp_choice")"
-#     if [[ -n "$choice" ]]; then
-#       builtin cd -- "${choice:h}"
-#       rm -f -- "$tmp_cwd" "$tmp_choice"
-#       command nvim -- "$choice"
-#       return 0
-#     fi
-#   fi
-#
-#   # 2) Otherwise (q/cancel), cd to the last dir Yazi wrote
-#   if [[ -s "$tmp_cwd" ]]; then
-#     cwd="$(cat "$tmp_cwd")"
-#     [[ -n "$cwd" && "$cwd" != "$PWD" ]] && builtin cd -- "$cwd"
-#   fi
-#
-#   rm -f -- "$tmp_cwd" "$tmp_choice"
-# }
-#
-
 y() {
   local tmp_cwd tmp_choice cwd choice
 
@@ -355,8 +280,6 @@ fi
 # ================================
 # opam (quiet)
 [[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" >/dev/null 2>&1
-# Java (for Morpho)
-path=(/opt/homebrew/opt/openjdk/bin $path)
 
 # ================================
 #  FINAL: Auto-attach tmux (and pass THEME in)
@@ -366,9 +289,3 @@ if [[ $- == *i* ]] && command -v tmux >/dev/null 2>&1 && [[ -z "$TMUX" && -z "$N
   tmux set-environment -g THEME "$THEME" 2>/dev/null
   tmux attach -t main || tmux new -s main
 fi
-
-
-
-# [ -f "/Users/kallip/.ghcup/env" ] && . "/Users/kallip/.ghcup/env" # ghcup-env
-
-path=("/Applications/IntelliJ IDEA.app/Contents/MacOS" $path)

@@ -2,7 +2,7 @@
 ---@type ChadrcConfig
 local M = {}
 
-local LIGHT, DARK = "vim_default_light", "vim_default"
+local LIGHT, DARK = "vim_default", "vim_default"
 local is_light = (vim.env.THEME == "light")
 local chosen = is_light and LIGHT or DARK
 M.base46 = {

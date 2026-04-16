@@ -12,17 +12,9 @@ set statusbar-v-padding 2
 
 
 # Navigation
-map [normal] j scroll smooth-down
-map [normal] k scroll smooth-up
-map [normal] h scroll left
-map [normal] l scroll right
 map [normal] <C-d> scroll half-down
 map [normal] <C-u> scroll half-up
 
-map [fullscreen] j scroll smooth-down
-map [fullscreen] k scroll smooth-up
-map [fullscreen] h scroll left
-map [fullscreen] l scroll right
 map [fullscreen] <C-d> scroll half-down
 map [fullscreen] <C-u> scroll half-up
 

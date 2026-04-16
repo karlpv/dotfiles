@@ -1,5 +1,8 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "master",
+  lazy = false,
+  build = ":TSUpdate",
   opts = {
     ensure_installed = {
       "vim",
@@ -16,7 +19,6 @@ return {
     },
     highlight = {
       enable = true,
-      use_languagetree = true,
     },
 
     indent = { enable = true },

@@ -20,6 +20,9 @@ local function lsp_picker(name, fallback)
   end
 end
 
+vim.keymap.del("n", "<leader>h")
+vim.keymap.del("n", "<leader>v")
+
 map("i", "jj", "<ESC>")
 map("i", "jk", "<ESC>")
 map("t","<ESC>",[[<C-\><C-n>]],opts)
@@ -41,14 +44,12 @@ map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- AI and LSP toggles
-map("n", "<leader>ai", ":CodeiumToggle<CR>", { desc = "Toggle Codeium AI" })
+map("n", "<leader>ai", ":Codeium Toggle<CR>", { desc = "Toggle Codeium AI" })
 
 map("n", "<leader>lh", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = "Toggle LSP inlay hints" })
 
-map("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
-map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 map("n", "<leader>ld", vim.diagnostic.open_float, { desc = "Line diagnostics" })
 map("n", "<leader>lq", vim.diagnostic.setloclist, { desc = "Diagnostics to loclist" })
 map("n", "<leader>pd", picker "diagnostics", { desc = "Diagnostics picker" })
@@ -131,14 +132,14 @@ vim.api.nvim_create_autocmd("FileType", {
     -- Toggle preview
     map("n", "<leader>tp", "<cmd>TypstPreviewToggle<CR>", { desc = "Typst: Preview toggle", buffer = bufnr })
 
-    -- Force refresh preview (handy if something desyncs)
-    map("n", "<leader>tr", "<cmd>TypstPreviewRefresh<CR>", { desc = "Typst: Preview refresh", buffer = bufnr })
+    -- Sync preview to the current cursor position
+    map("n", "<leader>tr", "<cmd>TypstPreviewSyncCursor<CR>", { desc = "Typst: Preview sync cursor", buffer = bufnr })
 
     -- Stop preview explicitly (if you want it separate from toggle)
     map("n", "<leader>tq", "<cmd>TypstPreviewStop<CR>", { desc = "Typst: Preview stop", buffer = bufnr })
 
-    -- Open compiled PDF (quick “final look”)
-    map("n", "<leader>to", "<cmd>TypstPreviewOpen<CR>", { desc = "Typst: Open preview", buffer = bufnr })
+    -- Open another preview frontend if one is already running
+    map("n", "<leader>to", "<cmd>TypstPreview<CR>", { desc = "Typst: Open preview", buffer = bufnr })
   end,
 })
 

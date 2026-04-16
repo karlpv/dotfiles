@@ -1,10 +1,10 @@
 [opener]
 sioyek_reuse = [
-  { run = "sioyek --reuse-window %s", orphan = true, desc = "Sioyek (reuse window)", for = "macos" },
+  { run = "/opt/homebrew/bin/sioyek --reuse-window %s", orphan = true, desc = "Sioyek (reuse window)", for = "macos" },
 ]
 
 sioyek_new_window = [
-  { run = "sioyek --new-window %s", orphan = true, desc = "Sioyek (new window)", for = "macos" },
+  { run = "/opt/homebrew/bin/sioyek --new-window %s", orphan = true, desc = "Sioyek (new window)", for = "macos" },
 ]
 
 zathura = [
